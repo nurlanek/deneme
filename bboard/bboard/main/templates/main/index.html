@@ -1,0 +1,21 @@
+{% extends "layout/basic.html" %}
+
+{% load thumbnail %}
+{% load static %}
+
+{% block content %}
+{% if bbs %}
+
+<h2>Бүгүнкү программа</h2>
+<ul class="list-unstyled">
+    {% for bb in bbs %}
+    <li class="media my-0 p-0 ">
+        {% url 'main:detail' rubric_pk=bb.rubric.pk pk=bb.pk as url %}
+        Эфир: {{ bb.created_at }} &nbsp;|&nbsp;Рубрика: &nbsp; <strong>{{ bb.rubric.name }}</strong> &nbsp;|&nbsp;
+        <a href="{{ url }}{{ all }}"><strong>{{ bb.title }}</strong></a>
+        &nbsp;|&nbsp; Даярдаган:{{ bb.author }}
+    {% endfor %}
+    </li>>
+</ul>
+{% endif %}
+{% endblock %}

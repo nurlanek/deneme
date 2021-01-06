@@ -1,0 +1,35 @@
+{% extends "layout/basic.html" %}
+
+{% load thumbnail %}
+{% load static %}
+{% load bootstrap4 %}
+
+{% block title %}{{ rubric }}{% endblock %}
+
+{% block searchform %}
+{% endblock %}
+
+{% block content %}
+<h2 class="mb-2">{{ rubric }}</h2>
+<div class="container-fluid mb-4">
+    <div class="row">
+        <div class="col">&nbsp;</div>
+        <form class="col-md-auto form-inline">
+            {% bootstrap_form form show_label=False %}
+            {% bootstrap_button content='Издөө' button_type='submit' %}
+        </form>
+    </div>
+</div>
+{% if bbs %}
+<ul class="list-unstyled">
+    {% for bb in bbs %}
+    <li class="media my-1 p-1 border">
+        {% url 'main:detail' rubric_pk=rubric.pk pk=bb.pk as url %}
+          {{ bb.created_at }}&nbsp; |&nbsp; <strong><a href="{{ url }}{{ all }}">{{ bb.title }}</a></strong>
+        &nbsp;|&nbsp; {{ bb.author }}
+    </li>
+    {% endfor %}
+</ul>
+{% bootstrap_pagination page url=keyword %}
+{% endif %}
+{% endblock %}

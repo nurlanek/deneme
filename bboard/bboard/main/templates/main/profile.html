@@ -1,0 +1,30 @@
+{% extends "layout/basic.html" %}
+
+{% load thumbnail %}
+{% load static %}
+
+{% block title %}Менин баракчам{% endblock %}
+
+{% block content %}
+<h2>Менин баракчам {{ user.username }}</h2>
+{% if user.first_name and user.last_name %}
+<p>Саламатсызбы, {{ user.first_name }} {{ user.last_name }}!</p>
+{% else %}
+<p>Саламатсызбы!</p>
+{% endif %}
+<p><a href="{% url 'main:profile_bb_add' %}">Жаңы программаны кошуу</a></p>
+{% if bbs %}
+<h3>Менин программаларым</h3>
+<ul class="list-unstyled">
+    {% for bb in bbs %}
+    <li class="media my-0 p-0 ">
+        {% url 'main:profile_bb_detail' pk=bb.pk as url %}
+            {{ bb.created_at }} &nbsp;|&nbsp;  Рубрика: &nbsp;<strong>{{ bb.rubric }} </strong>&nbsp;|&nbsp;
+            <h6><a href="{{ url }}">{{ bb.title }}</a></h6> &nbsp;|&nbsp;
+           <strong><a href="{% url 'main:profile_bb_change' pk=bb.pk %}">Оңдоо</a></strong>
+           &nbsp;|&nbsp;<strong> <a href="{% url 'main:profile_bb_delete' pk=bb.pk %}">өчүрүү</a></strong>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
